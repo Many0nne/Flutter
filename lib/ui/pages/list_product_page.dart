@@ -1,9 +1,10 @@
 import 'dart:convert';
-
+import 'package:epsi_shop/cart.dart';
 import 'package:epsi_shop/bo/product.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 
 class ListProductPage extends StatelessWidget {
   ListProductPage({super.key});
@@ -15,7 +16,7 @@ class ListProductPage extends StatelessWidget {
       print(res.body);
       List<dynamic> listMapProducts = jsonDecode(res.body);
       //Convertir cette lsite dynamique en List<Product>
-      return listMapProducts.map((lm) => Product.fromMap(lm)).toList();
+      return listMapProducts.map((lm) => Product.fromJson(lm)).toList();
     }
     return Future.error("Erreur de téléchargement");
   }
@@ -24,9 +25,18 @@ class ListProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text('appbarTitle'),
-        ),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('EPSI Shop'),
+        actions: [
+          IconButton(
+            onPressed: () => context.go("/cart"),
+            icon: Badge(
+              label: Text(context.watch<Cart>().getAll().length.toString()),
+              child: const Icon(Icons.shopping_cart),
+            ),
+          ),
+        ],
+      ),
         body: FutureBuilder<List<Product>>(
             future: getProducts(),
             builder: (context, snapshot) {

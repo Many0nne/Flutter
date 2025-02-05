@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:epsi_shop/cart.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -23,7 +26,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('EPSI Shop'),
+        actions: [
+          IconButton(
+            onPressed: () => context.go("/cart"),
+            icon: Badge(
+              label: Text(context.watch<Cart>().getAll().length.toString()),
+              child: const Icon(Icons.shopping_cart),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
