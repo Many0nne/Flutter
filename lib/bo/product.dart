@@ -23,6 +23,16 @@ class Product {
     );
   }
 
+    Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'price': price,
+      'image': image,
+    };
+  }
+
   String getPrice() {
     return '\$${price.toStringAsFixed(2)}';
   }

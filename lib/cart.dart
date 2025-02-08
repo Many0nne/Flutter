@@ -5,6 +5,8 @@ import 'package:epsi_shop/bo/product.dart';
 class Cart with ChangeNotifier {
   final List<Product> _items = [];
 
+  List<Product> get items => _items;
+
   List<Product> getAll() {
     return _items;
   }
